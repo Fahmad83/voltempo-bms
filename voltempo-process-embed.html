@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voltempo ISO Process Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#050810;font-family:'DM Sans',sans-serif;color:#dde4f0;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,212,170,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,.02) 1px,transparent 1px);
+  background-size:40px 40px;}
+.wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:100vh;}
+.left{padding:40px;display:flex;align-items:center;justify-content:center;border-right:1px solid rgba(0,212,170,.1);}
+.right{padding:40px;display:flex;flex-direction:column;justify-content:center;}
+svg.pmap{width:100%;max-width:420px;height:auto;}
+.sec-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:#00d4aa;text-transform:uppercase;margin-bottom:8px;}
+.title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:#fff;line-height:1;margin-bottom:10px;}
+.subtitle{font-size:13px;color:#5c6f88;line-height:1.7;margin-bottom:24px;}
+.clause-box{background:#0c1120;border:1px solid rgba(0,212,170,.14);border-radius:10px;padding:20px;margin-bottom:16px;display:none;}
+.clause-box.show{display:block;}
+.cb-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:#00d4aa;text-transform:uppercase;margin-bottom:4px;}
+.cb-name{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px;}
+.cb-desc{font-size:12px;color:#5c6f88;line-height:1.65;margin-bottom:10px;}
+.cb-feeds{font-size:11px;color:#5c6f88;}
+.cb-feeds span{color:#00d4aa;font-weight:600;}
+.proc-list{display:flex;flex-direction:column;gap:6px;}
+.pr{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;border:1px solid transparent;cursor:pointer;transition:all .18s;}
+.pr:hover,.pr.on{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.14);}
+.pd{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.pn{font-size:12px;font-weight:600;color:#dde4f0;flex:1;}
+.pc{font-family:'DM Mono',monospace;font-size:10px;color:#5c6f88;}
+.pnode{cursor:pointer;}
+.pnode.dim{opacity:.25;transition:opacity .2s;}
+@keyframes pulse{0%,100%{opacity:.3;}50%{opacity:.7;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+.pulse-ring{animation:pulse 2.5s ease-in-out infinite;}
+.orbit-ring{transform-origin:200px 200px;animation:spin 50s linear infinite;}
+@media(max-width:700px){.wrap{grid-template-columns:1fr;}.left{border-right:none;border-bottom:1px solid rgba(0,212,170,.1);padding:24px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="left">
+    <svg class="pmap" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="cg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00d4aa" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="rgba(0,212,170,0.55)"/>
+        </marker>
+        <marker id="arrp" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="rgba(168,85,247,0.7)"/>
+        </marker>
+      </defs>
+      <circle cx="200" cy="200" r="130" fill="url(#cg)"/>
+      <g class="orbit-ring">
+        <circle cx="200" cy="200" r="168" fill="none" stroke="#00d4aa" stroke-width=".7" stroke-dasharray="5 10" opacity=".2"/>
+      </g>
+      <circle cx="200" cy="200" r="118" fill="none" stroke="#00d4aa" stroke-width=".5" opacity=".15"/>
+      <g opacity=".15" stroke="#00d4aa" stroke-width=".8" stroke-dasharray="3 5">
+        <line x1="200" y1="82" x2="200" y2="163"/>
+        <line x1="284" y1="116" x2="237" y2="163"/>
+        <line x1="318" y1="200" x2="237" y2="200"/>
+        <line x1="284" y1="284" x2="237" y2="237"/>
+        <line x1="200" y1="318" x2="200" y2="237"/>
+        <line x1="116" y1="284" x2="163" y2="237"/>
+        <line x1="82" y1="200" x2="163" y2="200"/>
+        <line x1="116" y1="116" x2="163" y2="163"/>
+      </g>
+      <g fill="none" stroke="#00d4aa" stroke-width="1.3" marker-end="url(#arr)" opacity=".5">
+        <path d="M218,88 A118,118 0 0,1 276,122"/>
+        <path d="M292,130 A118,118 0 0,1 314,192"/>
+        <path d="M314,208 A118,118 0 0,1 292,270"/>
+        <path d="M276,278 A118,118 0 0,1 218,312"/>
+        <path d="M182,312 A118,118 0 0,1 124,278"/>
+        <path d="M108,270 A118,118 0 0,1 86,208"/>
+      </g>
+      <g fill="none" stroke="#a855f7" stroke-width="1.3" marker-end="url(#arrp)" opacity=".55" stroke-dasharray="5 3">
+        <path d="M86,192 A118,118 0 0,1 108,130"/>
+        <path d="M124,122 A118,118 0 0,1 182,88"/>
+      </g>
+      <circle class="pulse-ring" cx="200" cy="200" r="42" fill="none" stroke="#00d4aa" stroke-width="1.5" opacity=".45"/>
+      <circle cx="200" cy="200" r="34" fill="#0c1120" stroke="#00d4aa" stroke-width="1.5" filter="url(#glow)"/>
+      <text x="200" y="196" text-anchor="middle" fill="#00d4aa" font-family="'Bebas Neue',sans-serif" font-size="13" letter-spacing="2">PDCA</text>
+      <text x="200" y="209" text-anchor="middle" fill="#5c6f88" font-family="'DM Sans',sans-serif" font-size="7">CONTINUAL</text>
+      <text x="200" y="219" text-anchor="middle" fill="#5c6f88" font-family="'DM Sans',sans-serif" font-size="7">IMPROVEMENT</text>
+      <!-- Cl.4 -->
+      <g class="pnode" id="n4" onclick="sel(4)">
+        <circle cx="200" cy="82" r="23" fill="#0c1120" stroke="#00d4aa" stroke-width="1.6"/>
+        <text x="200" y="77" text-anchor="middle" fill="#00d4aa" font-family="'Bebas Neue',sans-serif" font-size="11" letter-spacing="1">CL.4</text>
+        <text x="200" y="89" text-anchor="middle" fill="#dde4f0" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">CONTEXT</text>
+      </g>
+      <!-- Cl.5 -->
+      <g class="pnode" id="n5" onclick="sel(5)">
+        <circle cx="284" cy="116" r="23" fill="#0c1120" stroke="#00a8ff" stroke-width="1.6"/>
+        <text x="284" y="111" text-anchor="middle" fill="#00a8ff" font-family="'Bebas Neue',sans-serif" font-size="11" letter-spacing="1">CL.5</text>
+        <text x="284" y="123" text-anchor="middle" fill="#dde4f0" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">LEADERSHIP</text>
+      </g>
+      <!-- Cl.6 -->
+      <g class="pnode" id="n6" onclick="sel(6)">
+        <circle cx="318" cy="200" r="23" fill="#0c1120" stroke="#f59e0b" stroke-width="1.6"/>
+        <text x="318" y="195" text-anchor="middle" fill="#f59e0b" font-family="'Bebas Neue',sans-serif" font-size="11" letter-spacing="1">CL.6</text>
+        <text x="318" y="207" text-anchor="middle" fill="#dde4f0" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">PLANNING</text>
+      </g>
+      <!-- Cl.7 -->
+      <g class="pnode" id="n7" onclick="sel(7)">
+        <circle cx="284" cy="284" r="23" fill="#0c1120" stroke="#00a8ff" stroke-width="1.6"/>
+        <text x="284" y="279" text-anchor="middle" fill="#00a8ff" font-family="'Bebas Neue',sans-serif" font-size="11" letter-spacing="1">CL.7</text>
+        <text x="284" y="291" text-anchor="middle" fill="#dde4f0" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">SUPPORT</text>
+      </g>
+      <!-- Cl.8 -->
+      <g class="pnode" id="n8" onclick="sel(8)">
+        <circle cx="200" cy="318" r="23" fill="#0c1120" stroke="#00d4aa" stroke-width="1.6"/>
+        <text x="200" y="313" text-anchor="middle" fill="#00d4aa" font-family="'Bebas Neue',sans-serif" font-size="11" letter-spacing="1">CL.8</text>
+        <text x="200" y="325" text-anchor="middle" fill="#dde4f0" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">OPERATIONS</text>
+      </g>
+      <!-- Cl.9 -->
+      <g class="pnode" id="n9" onclick="sel(9)">
+        <circle cx="116" cy="284" r="23" fill="#0c1120" stroke="#f59e0b" stroke-width="1.6"/>
+        <text x="116" y="279" text-anchor="middle" fill="#f59e0b" font-family="'Bebas Neue',sans-serif" font-size="11" letter-spacing="1">CL.9</text>
+        <text x="116" y="291" text-anchor="middle" fill="#dde4f0" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">EVALUATION</text>
+      </g>
+      <!-- Cl.10 -->
+      <g class="pnode" id="n10" onclick="sel(10)">
+        <circle cx="82" cy="200" r="23" fill="#0c1120" stroke="#a855f7" stroke-width="1.6"/>
+        <text x="82" y="195" text-anchor="middle" fill="#a855f7" font-family="'Bebas Neue',sans-serif" font-size="10" letter-spacing="1">CL.10</text>
+        <text x="82" y="207" text-anchor="middle" fill="#dde4f0" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">IMPROVE</text>
+      </g>
+      <!-- Interested Parties -->
+      <g class="pnode" id="n0" onclick="sel(0)">
+        <circle cx="116" cy="116" r="23" fill="#0c1120" stroke="#5c6f88" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="116" y="112" text-anchor="middle" fill="#5c6f88" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">INTERESTED</text>
+        <text x="116" y="122" text-anchor="middle" fill="#5c6f88" font-family="'DM Sans',sans-serif" font-size="6.5" font-weight="600">PARTIES</text>
+      </g>
+      <path d="M130,124 A118,118 0 0,1 182,88" fill="none" stroke="#5c6f88" stroke-width=".8" stroke-dasharray="3 4" marker-end="url(#arr)" opacity=".4"/>
+    </svg>
+  </div>
+
+  <div class="right">
+    <div class="sec-label">ISO Clauses 4–10</div>
+    <div class="title">Process Map &<br>Interactions</div>
+    <div class="subtitle">Voltempo's Integrated Management System — click any clause to explore the process and its interactions across ISO 9001, 14001 and 45001.</div>
+
+    <div class="clause-box" id="cb">
+      <div class="cb-tag" id="cb-tag"></div>
+      <div class="cb-name" id="cb-name"></div>
+      <div class="cb-desc" id="cb-desc"></div>
+      <div class="cb-feeds" id="cb-feeds"></div>
+    </div>
+
+    <div class="proc-list">
+      <div class="pr" onclick="sel(4)" id="r4"><div class="pd" style="background:#00d4aa"></div><div class="pn">Context of the Organisation</div><div class="pc">Cl.4</div></div>
+      <div class="pr" onclick="sel(5)" id="r5"><div class="pd" style="background:#00a8ff"></div><div class="pn">Leadership & Commitment</div><div class="pc">Cl.5</div></div>
+      <div class="pr" onclick="sel(6)" id="r6"><div class="pd" style="background:#f59e0b"></div><div class="pn">Planning — Risks & Objectives</div><div class="pc">Cl.6</div></div>
+      <div class="pr" onclick="sel(7)" id="r7"><div class="pd" style="background:#00a8ff"></div><div class="pn">Support — Resources & Competence</div><div class="pc">Cl.7</div></div>
+      <div class="pr" onclick="sel(8)" id="r8"><div class="pd" style="background:#00d4aa"></div><div class="pn">Operations — Planning & Control</div><div class="pc">Cl.8</div></div>
+      <div class="pr" onclick="sel(9)" id="r9"><div class="pd" style="background:#f59e0b"></div><div class="pn">Performance Evaluation</div><div class="pc">Cl.9</div></div>
+      <div class="pr" onclick="sel(10)" id="r10"><div class="pd" style="background:#a855f7"></div><div class="pn">Improvement — NCR & CAPA</div><div class="pc">Cl.10</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const D={
+  4:{tag:'Clause 4',name:'Context of the Organisation',desc:'Establishes Voltempo\'s internal and external context, identifies interested parties (customers, regulators, Innovate UK, eFREIGHT 2030 partners) and defines the IMS scope covering EV charging design, manufacture and deployment.',feeds:'Feeds into → <span>Cl.5 Leadership</span>, <span>Cl.6 Planning</span>'},
+  5:{tag:'Clause 5',name:'Leadership & Commitment',desc:'Defines top management accountability for the IMS. Covers the Quality, Environmental and H&S Policies, and establishes roles, responsibilities and authority across Voltempo\'s organisation.',feeds:'Feeds into → <span>Cl.6 Planning</span>, <span>Cl.7 Support</span>'},
+  6:{tag:'Clause 6',name:'Planning — Risks & Objectives',desc:'Identifies and evaluates risks and opportunities, environmental aspects and H&S hazards. Sets measurable quality, environmental and safety objectives with KPIs across all Voltempo sites and operations.',feeds:'Feeds into → <span>Cl.7 Support</span>, <span>Cl.8 Operations</span>'},
+  7:{tag:'Clause 7',name:'Support — Resources & Competence',desc:'Manages resources, infrastructure, competence and documented information underpinning the IMS. Includes the training matrix, communication plans and the controlled document register in this BMS.',feeds:'Feeds into → <span>Cl.8 Operations</span>'},
+  8:{tag:'Clause 8',name:'Operations — Planning & Control',desc:'Controls core operational processes: HyperCharger design, manufacture, site installation, commissioning and customer handover. Manages supplier evaluation, change control and emergency response.',feeds:'Feeds into → <span>Cl.9 Performance Evaluation</span>'},
+  9:{tag:'Clause 9',name:'Performance Evaluation',desc:'Monitors and analyses IMS performance through internal audits, customer satisfaction surveys, legal compliance evaluations, KPI tracking and management reviews.',feeds:'Feeds into → <span>Cl.10 Improvement</span>'},
+  10:{tag:'Clause 10',name:'Improvement — NCR & CAPA',desc:'Drives continual improvement through non-conformance reporting, root cause analysis, corrective and preventive action. Outputs feed back into Cl.4 and Cl.6 to close the PDCA loop.',feeds:'Feeds into → <span>Cl.4 Context</span>, <span>Cl.6 Planning</span> (PDCA loop)'},
+  0:{tag:'Input',name:'Interested Parties',desc:'Customers, regulators (DVSA, HSE, EA), investors, Innovate UK, DfT, eFREIGHT 2030 partners, employees and supply chain — all providing requirements that shape the IMS scope and objectives.',feeds:'Feeds into → <span>Cl.4 Context</span>'}
+};
+function sel(id){
+  const n=D[id];if(!n)return;
+  document.querySelectorAll('.pr').forEach(r=>r.classList.remove('on'));
+  document.querySelectorAll('.pnode').forEach(e=>e.classList.add('dim'));
+  const row=document.getElementById('r'+id);if(row)row.classList.add('on');
+  const node=document.getElementById('n'+id);if(node)node.classList.remove('dim');
+  document.getElementById('cb-tag').textContent=n.tag;
+  document.getElementById('cb-name').textContent=n.name;
+  document.getElementById('cb-desc').textContent=n.desc;
+  document.getElementById('cb-feeds').innerHTML=n.feeds;
+  document.getElementById('cb').classList.add('show');
+}
+</script>
+</body>
+</html>
